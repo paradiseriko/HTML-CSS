@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绘制矩形</title>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2001/XInclude" version="1.1" >
+    <rect style="fill: rgb(255,100,0);height: 200px;width: 400px"></rect>
+</svg>
+<canvas id="myCanvas" width="500" height="500" >
+</canvas>
+<script>
+    var canvas=document.getElementById("myCanvas");
+    var ctx=canvas.getContext("2d");
+    ctx.rect(100,100,300,200);
+    ctx.fillStyle="pink";
+    ctx.fill();
+</script>
+</body>
+</html>
