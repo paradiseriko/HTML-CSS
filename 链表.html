@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>链表</title>
+</head>
+<body>
+<script>
+    //创建链表
+    function LinkedList() {
+        let Node = function(element){
+            this.element = element;    this.next = null;  };
+        let length = 0;
+        let head = null;
+
+
+        //向链表尾部追加元素
+        this.append=function (element) {
+            let node=new Node(element),//创建node项
+                current;
+            if (head===null){
+               head=node;
+            }else {
+                current=head;
+                while (current.next){//循环列表，直到找到最后一项
+                     curren=current.next;
+                }
+                current.next=node;//找到最后一项，将其next赋值为node，建立链接
+            }
+            length++;//更新列表长度
+        };
+
+
+        //从链表中移除元素
+       this.removeAt=function (position) {
+           if (position>-1&&position<length){//检验要移除的元素位置是否有效,从0（包括0）到列表长度（size-1）
+              let current=head,
+              previous,
+              index=0;
+              if (position===0){
+                 head=current.next;
+              }else {
+                  while (index++<position){
+                      previous=current;
+                      current=current.next;
+                  }
+                  previous.next=current.next;//将previous与current的下一项链接起来：跳过current，从而移除它
+              }
+              length--;
+              return current.element;
+           }else {
+               return null;//如果不是有效位置，就返回null，没有从列表移除有效元素
+           }
+       };
+
+       //在任意位置插入元素
+       this.insert=function (position,element) {
+           if (position>=0&&position<=length){//检查越界值
+              let node=new Node(element),
+                  current=head,
+                  previous,
+                  index=0;
+              if (position===0){//在第一个位置添加
+                  node.next=current;
+                  head=node;
+              }else {
+                  while (index++<position){
+                      previous=current;
+                      current=current.next;
+                  }
+                  node.next=current;
+                  previous.next=node;
+              }
+              length++;
+              return true;
+           }else {
+               return false;
+           }
+       };
+
+    }
+
+
+</script>
+
+</body>
+</html>
