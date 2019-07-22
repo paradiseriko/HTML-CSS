@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            counter-reset: chapter;
+        }
+        h1:before{
+            content: "第"counter(chapter)"章";
+        }
+        h1{
+            counter-increment: chapter;
+        }
+    </style>
+</head>
+<body>
+<h1></h1>
+<h1></h1>
+<h1></h1>
+<h1></h1>
+</body>
+</html>
