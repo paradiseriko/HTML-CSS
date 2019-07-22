@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //去重
+    var arr1=['a'];
+    var arr2=['b','c'];
+    var arr3=['c',['d'],'e',undefined,null];
+    var concat=(function () {
+        var _concat=function (arr1,arr2) {
+            for (var i=0,len=arr2.length;i<len;i++){
+                ~arr1.indexOf(arr2[i])||arr1.push(arr2[i]);//~取反,所以用indexOf操作符可以用~操作来判断某个字符串里是否有某个字符。
+            }
+        };
+        return function () {
+            var result=[];
+            for (i=0,len=arguments.length;i<len;i++){
+                _concat(result,arguments[i]);
+            }
+          return result;
+        }
+    })();
+</script>
+</body>
+</html>
