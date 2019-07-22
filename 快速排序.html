@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var arr=[5,7,2,9,3,8,4,7,1];
+    function quickSort(arr) {
+        //每次选择最左边的数作为基数
+        if (arr.length<2){
+           return arr;
+        }
+        //定义左指针
+        var left=0;
+        //定义右指针
+        var right=arr.length-1;
+        //开启每一轮排序
+        while (left<right){
+            //寻找右边比arr[0]小的下标
+            while (arr[right]>=arr[0]&&left<right){
+                right=right-1;
+            }
+            while (arr[left]<arr[0]&&left<right){
+                 left++;
+            }
+            //当左指针与右指针相遇，交换arr[0]与当前两个指针所在的元素
+            if (right===left){
+                let mid=arr[right];
+                arr[right]=arr[0];
+                arr[0]=mid;
+                break;
+            }
+            //当左指针小于右指针的位置，交换两个当前位置元素
+            let tem=arr[right];
+            arr[right]=arr[left];
+            arr[left]=tem;
+        }
+       return quickSort(arr.slice(0,left)).concat(arr.slice(left,right+1)).concat(quickSort(arr.slice(right+1)));
+    }
+    alert(quickSort(arr));
+</script>
+</body>
+</html>
