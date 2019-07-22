@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var str="aaaaaaaaaaaaabbbbbccdef";
+    function dealStr(str) {
+        var obj={};
+        for (i=0;i<str.length;i++){
+            var v=str.charAt(i);//charAt() 方法可返回指定位置的字符。
+            if (obj[v]&&obj[v].value===v){
+                ++obj[v].count;
+            } else {
+                obj[v]={
+                    count:1,
+                    value:v
+                }
+            }
+        }
+        return obj;
+    }
+    var obj=dealStr(str);
+    for (key in obj){
+        console.log(obj[key].value+'='+obj[key].count);
+    }
+</script>
+</body>
+</html>
