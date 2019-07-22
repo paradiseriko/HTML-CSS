@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>name:<span id="pname"></span></p>
+<p>age:<span id="page"></span></p>
+<p>street:<span id="pstreet"></span></p>
+<p>phone:<span id="phone"></span></p>
+<script>
+    var JSONObject={
+        "name":"riko",
+        "age":21,
+        "street":"昆山",
+        "phone":"2222233"
+    };
+    document.getElementById("pname").innerHTML=JSONObject.name;
+    document.getElementById("page").innerHTML=JSONObject.age;
+    document.getElementById("pstreet").innerHTML=JSONObject.street;
+    document.getElementById("phone").innerHTML=JSONObject.phone;
+</script>
+</body>
+</html>
