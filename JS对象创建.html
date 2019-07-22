@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对象创建</title>
+</head>
+<body>
+1、通过Object构造函数或对象字面量创建单个对象
+这些方式有明显的缺点：使用同一个接口创建很多对象，会产生大量的重复代码。为了解决这个问题，出现了工厂模式。
+
+2、工厂模式
+考虑在ES中无法创建类（ES6前），开发人员发明了一种函数，用函数来封装以特定接口创建对象的细节。（实现起来是在一个函数内创建好对象，然后把对象返回）。
+函数createPerson（）能够根据接受的参数来构建一个包含所有必要信息的Person对象。
+工厂模式虽然解决了创建多个相似对象的问题，但却没有解决对象识别的问题，即怎么知道一个对象的类型
+<script>
+    function creatPerson(name,age,job) {
+        var o=new Object();
+        o.name=name;
+        o.age=age;
+        o.job=job;
+        o.sayName=function () {
+            alert(this.name);
+        };
+        return o;
+    }
+    var person1=creatPerson("riko",21,"Software Engineer");
+    var person2=creatPerson("kincolle",30,"Senior Engineer");
+</script>
+
+3、构造函数模式
+像Object和Array这样的原生构造函数，在运行时会自动出现在执行环境。此外，也可以创建自定义的构造函数，从而定义自定义对象类型的属性和方法。
+用构造函数可以创建特定类型的对象，同时也可以创建自定义的构造函数，从而定义自定义对象类型的属性和方法.
+与工厂模式的区别在于：
+1、没有显式地创建对象；
+2、直接将属性和方法赋给了this对象
+3.没有return语句；
+4.要创建新实例，必须使用new操作符；（否则属性和方法将会被添加到window对象）
+5.可以使用instanceof操作符检测对象类型
+　　构造函数的问题：
+　　构造函数内部的方法会被重复创建，不同实例内的同名函数是不相等的。可通过将方法移到构造函数外部解决这一问题，但面临新问题：封装性不好。
+　　这些问题可通过原型模式解决。
+<script>
+    function Person(name.age.job) {
+        this.name=name;
+        this.age=age;
+        this.job=job;
+        this.sayName=function () {
+            alert(this.name);
+        };
+    }
+    var person1=new Person();
+    var person2=new Person();
+</script>
+
+4、原型模式
+我们创建的每个函数都有一个prototype属性，这个属性是一个指针，指向一个对象，
+而这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。（prototype就是通过调用构造函数而创建的那个对象实例的原型对象）。
+使用原型对象的好处是可以让所有对象实例共享它所包含的属性和方法。换句话说，不必在构造函数中定义对象实例的信息，而是可以将这些信息直接添加到原型对象中。
+<script>
+    function Person() {}
+    Person.prototype.name="riko";
+    Person.prototype.age="21";
+    Person.prototype.job="Software Engineer";
+    Person.prototype.sayName=function () {
+        alert(this.name);
+    };
+var person1=new Person();
+person1.sayName();
+</script>
+更常见的做法是用一个包含所有属性和方法的对象字面量来重写整个原型对象，并重设constructor属性。
+<script>
+    function Person(){
+    }
+    Person.prototype={
+        name:"...",
+        age:29,
+        job:"...",
+        sayName:function(){
+        ...
+        }
+    };
+    Object.defineProperty(Person.prototype,"constructor",{
+        enumerable:false,
+        value:Person,
+    });
+</script>
+原型对象的问题：
+他省略了为构造函数传递初始化参数这一环节，结果所有实例在默认情况下都将取得相同的属性值，虽然这会在一定程度带来一定的不便，
+但不是最大的问题，最大的问题是由其共享的本性所决定的。
+对于包含基本值的属性可以通过在实例上添加一个同名属性隐藏原型中的属性。
+然后，对于包含引用数据类型的值来说，会导致问题。 这些问题导致很少单独使用原型模式。
+
+5、组合使用构造函数模式和原型模式
+这是创建自定义类型的最常见的方式。 构造函数模式用于定义实例属性，而原型模式用于定义方法和共享的属性。
+所以每个实例都会有自己的一份实例属性的副本，但同时共享着对方法的引用，最大限度的节省了内存。同时支持向构造函数传递参数。
+<script>
+    function Person(age,name.job){
+        this.name=name;
+        this.age=age;
+        this.job=job;
+        this.friends=["Pony","Jack"];
+    }
+    Person.protoype{
+        constructor:person,
+            sayName:function(){
+            alert(this.name);
+        }
+    }
+    var person1=new Person("Zhang","28","engineer");
+    var person2=new Person("Li","27","farmer");
+    person1.friends.push("Van");
+    alert(person1.friends);  // pony , jack ,Van
+    alert(person2.friends); // pony,jack
+    alert(person1.friends===person2.friends); //false
+    alert(person1.sayName===person2.sayName); //true
+</script>
+
+6、动态原型模式
+动态原型把所有信息都封装在构造函数中，而通过构造函数中初始化原型，又保存了同时使用构造函数和原型的优点。
+这里只有sayName（）不存在的情况下，才会将它添加到原型中，
+if语句块只有在初次调用函数的时候才会执行，此后原型已经完成了初始化，不需要在做什么修改了。能够立刻在所有实例中得到反映。
+if语句检查可以是初始化之后应该存在的任何属性或方法。
+<script>
+   function Person(name,age,job) {
+       this.name=name;
+       this.age=age;
+       this.job=job;
+       if (typeof this.sayName()!="function"){
+          Person.prototype.sayName=function(){
+              alert(this.name);
+          };
+       }
+   }
+</script>
+
+7.稳妥构造函数模式
+指的是没有公告属性，而且其方法也不引用this的对象。
+（1）新创建的实例方法不引用this（2）二是不使用new操作符调用构造函数
+变量person保存 的是一个稳妥对象，而除了sayName()方法外，没有别的方式可以访问其数据成员。
+<script>
+    function Person(name,age,job) {
+        var o=new Object();
+        o.sayName=function(){
+            alert(name);
+        };
+        return o;
+    }
+</script>
+
+8.寄生构造函数模式
+当你需要创建一个自定义类型的时候,当前面的随笔中的模式都不适用的情况下,可以使用寄生构造函数模式。
+这种模式的基本思想是创建一个函数,该函数的作用仅仅是封装创建对象的代码。
+作用:寄生模式可以在特殊的情况下为对象来创建构造函数,原因在于我们可以通过构造函数重写对象的值，
+并通过return返回重写调用构造函数(创建的对象的实例)之后的对象实例的新的值。
+<script>
+    function Person(age,name) {
+        var o=new Object();
+        o.age=age;
+        o.name=name;
+        o.sayName=function(){
+            alert(this.name);
+        };
+        return o;
+    }
+    var person=new Person(22,"张三");
+    person.sayName();
+</script>
+</body>
+</html>
