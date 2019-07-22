@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DIV+CSS实现三栏布局</title>
+    <style>
+       .container div{
+           height: 200px;
+       }
+       .container{
+           padding: 0 200px;
+       }
+        .main,.left,.right{
+            position: relative;
+            float: left;
+        }
+        .left,.right{
+            width: 200px;
+        }
+        .main{
+            width: 100%;
+            background-color: gold;
+        }
+        .left{
+            background: blue;
+            margin-left: -100%;
+            left: -200px;
+        }
+        .right{
+            background: hotpink;
+            margin-left: -200px;
+            left: 200px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main">
+            <h2>爱创课堂</h2>
+        </div>
+        <div class="left">左边内容</div>
+        <div class="right">右边内容</div>
+    </div>
+</body>
+</html
