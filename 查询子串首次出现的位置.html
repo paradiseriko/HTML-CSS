@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        //方法一
+        var str = 'abccbaxzbc';
+        var sub = 'axz';
+
+      /*  function indexOf(arr, item) {
+            if (Array.prototype.indexOf()) {
+                return arr.indexOf(item);
+            } else {
+                for (i = 0; i < arr.length; i++) {
+                    if (arr[i] === item) {
+                        return i;
+                    }
+                }
+            }
+            return -1;
+        }
+      console.log(str.indexOf('axz'));*/
+      
+        //方法二
+        function getIndex(str, sub) {
+            for (i = 0; i <= str.length - sub.length; i++) {
+               for (j=0;j<sub.length;j++){
+                   if (sub[j] !== str[j + i]) {
+                       break;
+                   }
+                   if (j === sub.length - 1) {
+                       return i;
+                   }
+               }
+
+            }
+            return -1;
+        }
+        console.log(getIndex(str, sub));
+
+    </script>
+
+</body>
+</html>

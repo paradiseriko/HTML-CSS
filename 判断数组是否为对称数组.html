@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <script>
+        //普通方法
+        var arr1 = ['a', 'b', 'c', 'b', 'a'];
+        var arr2 = ['a', 'c', 'c', 'b', 'a'];
+        function symmetry(arr) {
+            var newArr = [];
+            for (i = 0; i < arr.length; i++) {
+                newArr.push(arr[i]);
+            }
+            newArr.reverse();
+            for (i = 0; i < arr.length; i++) {
+                if (arr[i] !== newArr[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        console.log(symmetry(arr2));
+
+
+
+        //算法
+        /*function symmetry(arr) {
+            var low=0;
+            var high=arr.length-1;
+            while (true){
+                if (low>=high){
+                    break;
+                } else if (arr[low]!==arr[high]){
+                    return false;
+                }
+                low++;
+                high--;
+            }
+            return true;
+        }
+
+        console.log(symmetry(arr1));*/
+    </script>
+</body>
+</html>

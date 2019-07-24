@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+
+        /*
+            5、计算数组中，最大连续增长子序列的长度，如：[1,2,3,4,1,2,3,4,5,1,2,3] 结果为5
+         */
+
+        var arr=[1,2,3,4,1,2,3,4,5,1,2,3,4,5,7,8,9,20,21];
+
+        function getMaxLength(arr){
+            var addNum=1;//每一个序列增长的次数，如果为0，则表示要与上一个数据进行比较，但上一个数据是undefined。对比结果是false，if条件就无法满足，addNum就无法增加
+            var len=0;//最大的连续增长子序列的次数
+            for (i=1;i<arr.length;i++){
+                if (arr[i]>arr[i-1]){//当前下标要比上一个数据大，说明还在一个子序列里增长
+                    addNum++;
+                }else {//此时当前下标要比上一个下标小，说明已经到了下一个子序列里，那么我们需要给len赋值，同时addNum++
+                     len=addNum>len?addNum:len;//如果addNum的值比len大，那么就将addNum赋值给len，否则不更新
+                     addNum=1;//为了让下一个序列的次数增加，所以要还原
+                }
+            }
+            len=addNum>len?addNum:len;//当for循环走完，再把len的值计算一遍，保证即使前面不能else,依旧会计算len
+            return len;
+        }
+
+        console.log(getMaxLength(arr));
+
+
+    </script>
+</body>
+</html>
